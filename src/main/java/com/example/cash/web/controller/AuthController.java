@@ -9,11 +9,13 @@ import com.example.cash.web.dto.user.UserDto;
 import com.example.cash.web.dto.validation.OnCreate;
 import com.example.cash.web.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 
 @RestController
@@ -25,6 +27,12 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
     private final UserMapper userMapper;
+
+
+    @GetMapping("/test")
+    public ResponseEntity test(){
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("ok, it wooooorks!");
+    }
 
     @PostMapping("/login")
     public JwtResponse login (@Validated @RequestBody JwtRequest jwtRequest){
