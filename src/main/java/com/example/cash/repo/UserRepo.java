@@ -3,6 +3,7 @@ package com.example.cash.repo;
 import com.example.cash.domain.user.Role;
 import com.example.cash.domain.user.User;
 import org.mapstruct.Mapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 

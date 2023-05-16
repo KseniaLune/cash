@@ -17,7 +17,11 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional(readOnly = true)
