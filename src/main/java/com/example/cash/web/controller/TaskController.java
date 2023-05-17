@@ -6,6 +6,8 @@ import com.example.cash.web.dto.task.TaskDto;
 import com.example.cash.web.dto.validation.OnUpdate;
 import com.example.cash.web.mappers.TaskMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
+
+    @GetMapping("/test")
+    public ResponseEntity test(){
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("ok, task controller wooooorks!");
+    }
 
     @PutMapping
     public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto dto){

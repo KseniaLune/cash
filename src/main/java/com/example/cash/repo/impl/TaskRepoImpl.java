@@ -2,9 +2,9 @@ package com.example.cash.repo.impl;
 
 import com.example.cash.domain.exception.ResourceMappingEx;
 import com.example.cash.domain.task.Task;
-import com.example.cash.repo.DataSourceConfig;
+import com.example.cash.repo.mappers.DataSourceConfig;
 import com.example.cash.repo.TaskRepo;
-import com.example.cash.web.mappers.TaskRowMapper;
+import com.example.cash.repo.mappers.TaskRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

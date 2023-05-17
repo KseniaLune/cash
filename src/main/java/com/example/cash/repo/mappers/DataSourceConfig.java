@@ -1,4 +1,4 @@
-package com.example.cash.repo;
+package com.example.cash.repo.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -16,4 +16,6 @@ public class DataSourceConfig {
     public Connection getConnection(){
        return DataSourceUtils.getConnection(dataSource);
     }
+
+
 }
