@@ -20,24 +20,24 @@ public class TaskController {
     private final TaskMapper taskMapper;
 
     @GetMapping("/test")
-    public ResponseEntity test(){
+    public ResponseEntity test() {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("ok, task controller wooooorks!");
     }
 
     @PutMapping
-    public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto dto){
+    public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto dto) {
         Task taskUpdated = taskService.update(taskMapper.toEntity(dto));
         return taskMapper.toDto(taskUpdated);
     }
 
     @GetMapping("/{id}")
-    public TaskDto getById(@PathVariable Long id){
+    public TaskDto getById(@PathVariable Long id) {
         Task task = taskService.getById(id);
         return taskMapper.toDto(task);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@PathVariable Long id) {
         taskService.delete(id);
     }
 

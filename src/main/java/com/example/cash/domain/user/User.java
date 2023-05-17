@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-//@Builder
+@Builder
 public class User {
     private Long id;
     private String name;

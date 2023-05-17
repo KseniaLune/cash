@@ -1,6 +1,5 @@
 package com.example.cash.service.impl;
 
-import com.example.cash.domain.exception.ResourceNotFoundEx;
 import com.example.cash.domain.user.User;
 import com.example.cash.service.AuthService;
 import com.example.cash.service.UserService;

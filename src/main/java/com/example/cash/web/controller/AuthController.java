@@ -14,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -30,24 +27,24 @@ public class AuthController {
 
 
     @GetMapping("/test")
-    public ResponseEntity test(){
+    public ResponseEntity test() {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("ok, it wooooorks!");
     }
 
     @PostMapping("/login")
-    public JwtResponse login (@Validated @RequestBody JwtRequest jwtRequest){
+    public JwtResponse login(@Validated @RequestBody JwtRequest jwtRequest) {
         return authService.login(jwtRequest);
     }
 
     @PostMapping("/register")
-    public UserDto register (@Validated(OnCreate.class) @RequestBody UserDto dto){
+    public UserDto register(@Validated(OnCreate.class) @RequestBody UserDto dto) {
         User createdUser = userService.create(userMapper.toEntity(dto));
         return userMapper.toDto(createdUser);
     }
 
     @PostMapping("/refresh")
-    public JwtResponse refresh (@RequestBody String refreshToken){
-       return authService.refresh(refreshToken);
+    public JwtResponse refresh(@RequestBody String refreshToken) {
+        return authService.refresh(refreshToken);
     }
 
 }

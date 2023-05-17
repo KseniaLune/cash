@@ -2,10 +2,11 @@ package com.example.cash.repo.impl;
 
 import com.example.cash.domain.exception.ResourceMappingEx;
 import com.example.cash.domain.task.Task;
-import com.example.cash.repo.mappers.DataSourceConfig;
 import com.example.cash.repo.TaskRepo;
+import com.example.cash.repo.mappers.DataSourceConfig;
 import com.example.cash.repo.mappers.TaskRowMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -14,27 +15,29 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@Log4j
 public class TaskRepoImpl implements TaskRepo {
 
     private final DataSourceConfig dataSourceConfig;
     private final String FIND_BY_ID = """
-        SELECT tasks.id as task_id,
-               tasks.title as task_title,
-               tasks.description as task_description,
-               tasks.expiration_date as tasks_expiration_date  ,
-               tasks.status as tasks_status
-        FROM tasks
+        SELECT t.id as task_id,
+               t.title as task_title,
+               t.description as task_description,
+               t.expiration_date as task_expiration_date,
+               t.status as task_status
+        FROM tasks t
         where id = ?""";
 
+
     private final String FIND_ALL_BY_USER_ID = """
-        SELECT tasks.id as task_id,
-               tasks.title as task_title,
-               tasks.description as task_description,
-               tasks.expiration_date as tasks_expiration_date  ,
-               tasks.status as tasks_status
-        FROM tasks
-        JOIN users_tasks ut on tasks.id = ut.task_id
-        where ut.user_id = ?""";
+            SELECT t.id              as task_id,
+                   t.title           as task_title,
+                   t.description     as task_description,
+                   t.expiration_date as task_expiration_date,
+                   t.status          as task_status
+            FROM tasks t
+                     JOIN users_tasks ut on t.id = ut.task_id
+            WHERE ut.user_id = ?""";
 
     private final String ASSIGN_TO_USER_BY_ID = """
         INSERT INTO users_tasks (task_id, user_id)
@@ -78,6 +81,7 @@ public class TaskRepoImpl implements TaskRepo {
             statement.setLong(1, userId);
 
             try (ResultSet rs = statement.executeQuery()) {
+
                 return TaskRowMapper.mapManyRows(rs);
             }
 

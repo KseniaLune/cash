@@ -30,7 +30,7 @@ public class UserController {
     private final TaskMapper taskmapper;
 
     @GetMapping("/test")
-    public ResponseEntity test(){
+    public ResponseEntity test() {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("ok, user controller wooooorks!");
     }
 
