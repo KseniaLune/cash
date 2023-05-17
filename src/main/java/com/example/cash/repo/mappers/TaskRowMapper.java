@@ -1,14 +1,16 @@
-package com.example.cash.web.mappers;
+package com.example.cash.repo.mappers;
 
 import com.example.cash.domain.task.Status;
 import com.example.cash.domain.task.Task;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j
 public class TaskRowMapper {
 
     @SneakyThrows
@@ -19,9 +21,9 @@ public class TaskRowMapper {
                 .id(rs.getLong("task_id"))
                 .title(rs.getString("task_title"))
                 .description(rs.getString("task_description"))
-                .status(Status.valueOf(rs.getString("tasks_status")))
+                .status(Status.valueOf(rs.getString("task_status")))
                 .build();
-            Timestamp timestamp = rs.getTimestamp("tasks_status");
+            Timestamp timestamp = rs.getTimestamp("task_expiration_date");
             if (timestamp != null) {
                 task.setExpirationDate(timestamp.toLocalDateTime());
             }
@@ -29,20 +31,19 @@ public class TaskRowMapper {
         }
         return null;
     }
-@SneakyThrows
+
+    @SneakyThrows
     public static List<Task> mapManyRows(ResultSet rs) {
         List<Task> tasks = new ArrayList<>();
-        while (rs.next()){
-            //TODO create null-task and set task_id (null) to this task before if block
-
-            if (!rs.wasNull()){
-                Task task = Task.builder()
-                    .id(rs.getLong("task_id"))
-                    .title(rs.getString("task_title"))
-                    .description(rs.getString("task_description"))
-                    .status(Status.valueOf(rs.getString("tasks_status")))
-                    .build();
-                Timestamp timestamp = rs.getTimestamp("tasks_status");
+        while (rs.next()) {
+            Task task = Task.builder()
+                .id(rs.getLong("task_id"))
+                .build();
+            if (!rs.wasNull()) {
+                task.setTitle(rs.getString("task_title"));
+                task.setDescription(rs.getString("task_description"));
+                task.setStatus(Status.valueOf(rs.getString("task_status")));
+                Timestamp timestamp = rs.getTimestamp("task_expiration_date");
                 if (timestamp != null) {
                     task.setExpirationDate(timestamp.toLocalDateTime());
                 }

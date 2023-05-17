@@ -11,6 +11,8 @@ import com.example.cash.web.dto.validation.OnUpdate;
 import com.example.cash.web.mappers.TaskMapper;
 import com.example.cash.web.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,11 @@ public class UserController {
     private final TaskService taskservice;
     private final UserMapper userMapper;
     private final TaskMapper taskmapper;
+
+    @GetMapping("/test")
+    public ResponseEntity test() {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("ok, user controller wooooorks!");
+    }
 
     @PutMapping
     public UserDto update(@Validated(OnUpdate.class) @RequestBody UserDto dto) {

@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private PasswordEncoder passwordEncoder;
 
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder){
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
             throw new IllegalStateException("User already exist.");
         }
-        if (!user.getPassword().equals(user.getPasswordConfirmation())){
+        if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             throw new IllegalStateException("Passwords do not match.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
