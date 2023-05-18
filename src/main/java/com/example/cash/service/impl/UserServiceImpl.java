@@ -6,6 +6,7 @@ import com.example.cash.domain.user.User;
 import com.example.cash.repo.UserRepo;
 import com.example.cash.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +15,12 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Log4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -48,15 +47,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User create(User user) {
+
+
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
             throw new IllegalStateException("User already exist.");
         }
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             throw new IllegalStateException("Passwords do not match.");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        } catch (Exception e){
+        }
+            userRepo.create(user);
 
-        userRepo.create(user);
         Set<Role> roles = Set.of(Role.ROLE_USER);
         userRepo.insertUserRole(user.getId(), Role.ROLE_USER);
         user.setRoles(roles);
