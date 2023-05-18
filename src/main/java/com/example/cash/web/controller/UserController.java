@@ -47,8 +47,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserBy(@PathVariable Long id) {
+    public String deleteUserBy(@PathVariable Long id) {
         userService.delete(id);
+        return "User was deleting.";
     }
 
     @GetMapping("/{id}/tasks")
