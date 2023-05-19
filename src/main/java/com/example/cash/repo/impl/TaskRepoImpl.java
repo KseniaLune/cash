@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 @Log4j
-public class TaskRepoImpl implements TaskRepo {
+public class TaskRepoImpl implements TaskRepo{
 
     private final DataSourceConfig dataSourceConfig;
     private final String FIND_BY_ID = """
@@ -177,4 +177,6 @@ public class TaskRepoImpl implements TaskRepo {
             throw new ResourceMappingEx("Error while deleting task");
         }
     }
+
+
 }
