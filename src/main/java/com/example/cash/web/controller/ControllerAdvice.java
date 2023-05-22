@@ -7,12 +7,14 @@ import com.example.cash.domain.exception.ResourceNotFoundEx;
 import jakarta.validation.ConstraintDeclarationException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,6 +66,12 @@ public class ControllerAdvice {
                 violation -> violation.getMessage()
             )));
         return exBody;
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExBody handleAuthenticationException (AuthenticationException ex){
+        return new ExBody("Authentication failed.");
     }
 
     @ExceptionHandler(Exception.class)

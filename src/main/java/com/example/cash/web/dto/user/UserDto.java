@@ -3,6 +3,7 @@ package com.example.cash.web.dto.user;
 import com.example.cash.web.dto.validation.OnCreate;
 import com.example.cash.web.dto.validation.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "User DTO")
 public class UserDto {
 
     @NotNull(message = "Id must be not null.", groups = OnUpdate.class)

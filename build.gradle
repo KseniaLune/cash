@@ -27,6 +27,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'log4j:log4j:1.2.17'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
 
 
 
