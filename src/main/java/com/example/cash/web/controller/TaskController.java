@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,18 +28,21 @@ public class TaskController {
     }
 
     @PutMapping
+    @PreAuthorize("@customSecurityExpression.canAccessTask(#dto.id)")
     public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto dto) {
         Task taskUpdated = taskService.update(taskMapper.toEntity(dto));
         return taskMapper.toDto(taskUpdated);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public TaskDto getById(@PathVariable Long id) {
         Task task = taskService.getById(id);
         return taskMapper.toDto(task);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public void deleteById(@PathVariable Long id) {
         taskService.delete(id);
     }
