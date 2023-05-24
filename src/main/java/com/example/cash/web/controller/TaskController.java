@@ -29,22 +29,30 @@ public class TaskController {
 
     @PutMapping
     @PreAuthorize("@customSecurityExpression.canAccessTask(#dto.id)")
-    public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto dto) {
+    public ResponseEntity<TaskDto> update(@Validated(OnUpdate.class) @RequestBody TaskDto dto) {
         Task taskUpdated = taskService.update(taskMapper.toEntity(dto));
-        return taskMapper.toDto(taskUpdated);
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(taskMapper.toDto(taskUpdated));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
-    public TaskDto getById(@PathVariable Long id) {
+    public ResponseEntity <TaskDto> getById(@PathVariable Long id) {
         Task task = taskService.getById(id);
-        return taskMapper.toDto(task);
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(taskMapper.toDto(task));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
-    public void deleteById(@PathVariable Long id) {
-        taskService.delete(id);
+    public ResponseEntity deleteById(@PathVariable Long id) {
+        String result = taskService.delete(id);
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(result);
     }
 
 }
