@@ -14,5 +14,5 @@ public interface TaskService {
 
     Task create(Task task, Long userId);
 
-    void delete(Long id);
+    String delete(Long id);
 }
