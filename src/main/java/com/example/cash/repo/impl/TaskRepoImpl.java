@@ -81,7 +81,6 @@ public class TaskRepoImpl implements TaskRepo{
             statement.setLong(1, userId);
 
             try (ResultSet rs = statement.executeQuery()) {
-
                 return TaskRowMapper.mapManyRows(rs);
             }
 
